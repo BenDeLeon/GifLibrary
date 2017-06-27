@@ -1,11 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+src/dist/
 /dist
 /tmp
 
 # dependencies
 /node_modules
+
+#Images
+src/uploads/
 
 # IDEs and editors
 /.idea

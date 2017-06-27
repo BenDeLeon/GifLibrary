@@ -1,0 +1,27 @@
+
+
+body {
+    background: black;
+    color: white;
+}
+.sketchImage {
+    width: 75vw;
+}
+.carousel{
+    margin-top: 50px;
+}
+.carousel_conatiner {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img{
+    width: 100%;
+}
