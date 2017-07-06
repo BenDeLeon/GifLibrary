@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+  width: 100vw;
+}
+
+.imageBackGround {
+  background: black;
+  color: white;
+}
+img {
+  width: 75vw;
+}

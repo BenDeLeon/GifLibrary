@@ -5,31 +5,33 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PostsComponent } from './posts/posts.component';
-import { PostsService } from './posts.service';
-import { ImageService } from './images.service';
+import { GifsComponent } from './posts/gifs.component';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+
+import { GifsService } from './gifs.service';
+import { ImageService } from './images.service';
+
 
 const ROUTES = [
   {
     path: '',
-    redirectTo: 'posts',
+    redirectTo: 'gifs',
     pathMatch: 'full'
   },
-  {
-    path: 'posts',
-    component: PostsComponent
+    {
+    path: 'image-upload',
+    component: ImageUploaderComponent
   },
   {
-  path:'image-upload',
-  component: ImageUploaderComponent
+    path: 'gifs',
+    component: GifsComponent
   }
 ];
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent,
-    ImageUploaderComponent
+    ImageUploaderComponent,
+    GifsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,7 @@ const ROUTES = [
     NgbModule.forRoot(),    
     RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
-  providers:  [PostsService, ImageService],
+  providers:  [GifsService, ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
