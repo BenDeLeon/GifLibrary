@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Headers, RequestOptions, Http } from "@angular/http";
-import { UserImage } from "./image-interface";
 import { Observable } from "@angular/core/src/facade/async";
-
 import { ImageService } from "../images.service";
 import { GifsService } from ".././gifs.service";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -13,14 +11,12 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./image-uploader.component.css"]
 })
 export class ImageUploaderComponent implements OnInit {
-  public imageList: FileList;
-  public imagesToUpload: Array<File>;
-  public gifs: any;
-  public imagesToRemove: any;
-  public closeResult: string;
-  public previewUrl: string;
-  public location: string;
   public allSelect: boolean;
+  public gifs: Array<string>;
+  public imagesToRemove: Set<string>;
+  public imagesToUpload: Array<File>;
+  public location: string;
+  public previewUrl: string;
   constructor(
     private imageService: ImageService,
     private http: Http,
@@ -38,7 +34,6 @@ export class ImageUploaderComponent implements OnInit {
       );
       this.gifs = gifs;
     });
-    console.log(this.imagesToRemove.length);
   }
   upload() {
     this.imageService
@@ -79,7 +74,7 @@ export class ImageUploaderComponent implements OnInit {
   selectAllImage(event) {
     if (event.target.checked) {
       for (let gif of this.gifs) {
-        this.imagesToRemove.add(gif.$loki);
+        this.imagesToRemove.add(gif["$loki"]);
       }
       this.allSelect = true;
     } else {

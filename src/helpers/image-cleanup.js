@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-
 let imagePath = './src/uploads/';
 let dbJson = `${imagePath}/db.json`;
 
