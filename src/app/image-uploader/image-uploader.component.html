@@ -8,16 +8,15 @@
   </div>
   <br/>
   <br/>
-
   <div>
     <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
   </div>
   <br/>
-  <button type="button" (click)="upload()" class="btn btn-outline-primary btn-lg btn-block">Upload</button><br/><br/>
+  <button type="button" (click)="upload()" class="btn btn-outline-primary btn-lg btn-block" [disabled]="imagesToUpload.length === 0">Upload</button><br/><br/>
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th></th>
+        <th><input type="checkbox" (change)="selectAllImage($event)" [checked]="allSelect"/></th>
         <th>Image</th>
         <th>Name</th>
         <th>Date Created</th>
@@ -25,12 +24,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let gif of gifs">
-        <td><input type="checkbox" (change)="removeImageList(gif.$loki)" /></td>
-        <td><img src="http://localhost:3000/images/{{gif.filename}}" /></td>
+        <td><input type="checkbox" (change)="removeImageList(gif.$loki)" [checked]="imagesToRemove.has(gif.$loki)" /></td>
+        <td><img src="{{location}}/images/{{gif.filename}}" /></td>
         <td><a>{{gif.originalname}}</a></td>
         <td>{{gif.meta.created | date}}</td>
       </tr>
     </tbody>
   </table>
-  <button type="button" (click)="remove()">Remove</button>
+  <button type="button" (click)="remove()" class="btn btn-outline-danger btn-lg btn-block" [disabled]="imagesToRemove.size === 0">Remove</button>
+  <br/><br/>
 </div>

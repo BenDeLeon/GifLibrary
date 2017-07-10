@@ -6,6 +6,7 @@ const path = require("path");
 const Loki = require("lokijs");
 const http = require("http");
 const bodyParser = require("body-parser");
+const config = require("./Config");
 //Get Local Helpers
 const imageCleanup = require("./helpers/image-cleanup");
 // Get Routes
@@ -41,7 +42,7 @@ app.get("*", (req, res) => {
 
 //Get port from environement and stor in Express
 
-const port = process.env.PORT || "3000";
+const port = process.env.PORT || config.get("app:port");
 app.set("port", port);
 
 //Create HTTP server

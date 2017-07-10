@@ -1,7 +1,7 @@
 <div class="container imageBackGround">
   <ngb-carousel>
     <template ngbSlide *ngFor="let gif of gifs">
-      <img  src="http://localhost:3000/images/{{gif.filename}}" alt="Random first slide">
+      <img  src="{{location}}/images/{{gif.filename}}" alt="Random first slide">
     </template>
   </ngb-carousel>
 </div>

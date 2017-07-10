@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { GifsComponent } from './posts/gifs.component';
+import { GifsComponent } from './gifs/gifs.component';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
 
 import { GifsService } from './gifs.service';

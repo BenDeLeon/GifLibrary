@@ -1,12 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Headers, RequestOptions, Http } from "@angular/http";
-import {
-  FormGroup,
-  FormControl,
-  FormBuilder,
-  Validators,
-  ReactiveFormsModule
-} from "@angular/forms";
 import { UserImage } from "./image-interface";
 import { Observable } from "@angular/core/src/facade/async";
 
@@ -20,17 +13,15 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./image-uploader.component.css"]
 })
 export class ImageUploaderComponent implements OnInit {
-  public myForm: FormGroup;
-  public submitted: boolean;
-  public events: any[] = [];
   public imageList: FileList;
   public imagesToUpload: Array<File>;
   public gifs: any;
   public imagesToRemove: any;
   public closeResult: string;
   public previewUrl: string;
+  public location: string;
+  public allSelect: boolean;
   constructor(
-    private _fb: FormBuilder,
     private imageService: ImageService,
     private http: Http,
     private gifsService: GifsService
@@ -40,20 +31,14 @@ export class ImageUploaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.myForm = this._fb.group({
-      name: ["", [<any>Validators.required, <any>Validators.minLength(5)]],
-      fileList: [""],
-      address: this._fb.group({
-        street: ["", <any>Validators.required],
-        postcode: [""]
-      })
-    });
+    this.location = window.location.origin;
     this.gifsService.getAllGifs().subscribe(images => {
       let gifs: Array<string> = images.sort(
         (a, b) => b.meta.created - a.meta.created
       );
       this.gifs = gifs;
     });
+    console.log(this.imagesToRemove.length);
   }
   upload() {
     this.imageService
@@ -63,8 +48,9 @@ export class ImageUploaderComponent implements OnInit {
           (a, b) => b.meta.created - a.meta.created
         );
         this.gifs = gifs;
-        console.log(gifs);
       });
+    this.imagesToUpload = [];
+    this.previewUrl = "";
   }
   remove() {
     let request = Array.from(this.imagesToRemove);
@@ -76,6 +62,8 @@ export class ImageUploaderComponent implements OnInit {
         );
         this.gifs = gifs;
       });
+    this.allSelect = false;
+    this.imagesToRemove.clear();
   }
   fileChangeEvent(fileInput: any) {
     this.imagesToUpload = <Array<File>>fileInput.target.files;
@@ -86,6 +74,17 @@ export class ImageUploaderComponent implements OnInit {
       };
 
       reader.readAsDataURL(fileInput.target.files[0]);
+    }
+  }
+  selectAllImage(event) {
+    if (event.target.checked) {
+      for (let gif of this.gifs) {
+        this.imagesToRemove.add(gif.$loki);
+      }
+      this.allSelect = true;
+    } else {
+      this.imagesToRemove.clear();
+      this.allSelect = false;
     }
   }
   removeImageList(id) {

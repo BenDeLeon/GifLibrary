@@ -11,13 +11,10 @@ const Loki = require('lokijs');
 const http = require('http');
 const DB_NAME = 'db.json';
 const COLLECTION_NAME = 'images';
-const UPLOAD_PATH = 'C:/Users/bdeleon/uploadImages';
 const crypto = require('crypto');
 const db = new Loki(`./src/uploads/${DB_NAME}`, {
   persistenceMethod: 'fs'
 });
-let p = 'C:/Users/bdeleon/GifLibrary/mean-app/src/uploads';
-
 const loadCollection = function (colName, db = Loki) {
   return new Promise(resolve => {
     db.loadDatabase({}, () => {
@@ -53,7 +50,6 @@ router.post('/upload', upload.single('file'), async(req, res) => {
     const col = await loadCollection(COLLECTION_NAME, db);
     const data = col.insert(req.file);
     db.saveDatabase();
-    console.log(col.data);
     res.send(col.data);
   } catch (err) {
     console.log(err);
@@ -71,7 +67,6 @@ router.post('/remove', async(req, res) => {
       });
     }
     db.saveDatabase();
-    console.log(col);
     res.send(col.data);
   } catch (err) {
     console.log(err);

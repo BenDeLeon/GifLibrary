@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-var ncp = require('ncp').ncp;
 
-let p = 'C:/Users/bdeleon/GifLibrary/mean-app/src/uploads';
-let dbJson = `${p}/db.json`;
+let imagePath = './src/uploads/';
+let dbJson = `${imagePath}/db.json`;
 
 let imageCleanup = () => {
   fs.watch(dbJson, {
@@ -20,7 +19,7 @@ let imageCleanup = () => {
         for (image of content.collections[0].data) {
           arrayOfImages.add(image.filename);
         }
-        fs.readdir(p, function (err, files) {
+        fs.readdir(imagePath, function (err, files) {
           if (err) {
             throw err;
           }
@@ -29,7 +28,7 @@ let imageCleanup = () => {
             [...setOfImages].filter(x => !arrayOfImages.has(x) && x.indexOf(".json") === -1)
           );
           for (files of difference) {
-            let filesToDelete = path.join(p, files);
+            let filesToDelete = path.join(imagePath, files);
             fs.unlink(filesToDelete, () => {
               console.log(`Removing ${filesToDelete}, not found in db.json`);
             });
@@ -37,7 +36,6 @@ let imageCleanup = () => {
         });
       });
   });
-//   copyFiles();
 };
 
 module.exports = imageCleanup;
